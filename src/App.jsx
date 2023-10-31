@@ -12,12 +12,13 @@ function App() {
     <HashRouter>
     <Routes>
     <Route element={<ProtectedLayout />} path="/">
-    <Route element={<Home />} path="home" exact/>
+    <Route element={<Navigate to="/home" />} index />
+    <Route element={<Home />} path="home" />
 
       </Route>
         <Route element={<Login />} path="login" exact/>
         <Route element={<Signup />} path="signup" exact/>
-      <Route element={<Navigate to="/login" />} path="*" />
+      <Route element={<Navigate to="/" />} path="*" />
     </Routes>
     </HashRouter>
   )
