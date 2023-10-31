@@ -1,12 +1,7 @@
-import Wrapper from './Wrapper'
+import Wrapper from "./Wrapper";
 
 const Home = () => {
-  return (
-    <Wrapper noImg={true}>
-Home
-    </Wrapper>
+  return <Wrapper noImg={true}>Home</Wrapper>;
+};
 
-  )
-}
-
-export default Home
+export default Home;
