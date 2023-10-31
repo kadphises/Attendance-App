@@ -1,6 +1,6 @@
 
 // eslint-disable-next-line react/prop-types
-const Wrapper = ({children}) => {
+const Wrapper = ({noImg=false,children}) => {
   return (
     <section className="vh-100" style={{backgroundColor: '#eee'}}>
     <div className="container h-100">
@@ -10,12 +10,12 @@ const Wrapper = ({children}) => {
             <div className="card-body p-md-5">
               <div className="row justify-content-center">
                 {children}
-                <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+{  noImg?null:              <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
   className="img-fluid" alt="Sample image" />
 
-</div>
+</div>}
 </div>
 </div>
 </div>
