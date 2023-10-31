@@ -42,7 +42,7 @@ const Login = () => {
 
                       <label className="form-check-label pointer" htmlFor="form2Example3">
                         {"Don't"} have account? <a href="#!" onClick={(e)=>{e.preventDefault();
-                        navigate("signup")}}>Signup here</a>
+                        navigate("/signup")}}>Signup here</a>
                       </label>
                     </div>
 

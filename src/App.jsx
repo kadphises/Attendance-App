@@ -9,8 +9,8 @@ function App() {
   return (
     <HashRouter>
     <Routes>
-        <Route element={<Login />} path="login"/>
-        <Route element={<Signup />} path="signup"/>
+        <Route element={<Login />} path="login" exact/>
+        <Route element={<Signup />} path="signup" exact/>
       <Route element={<Navigate to="/login" />} path="*" />
     </Routes>
     </HashRouter>

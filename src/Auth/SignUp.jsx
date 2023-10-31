@@ -55,7 +55,7 @@ const Signup = () => {
 
                       <label className="form-check-label" htmlFor="form2Example3">
                         Already have account? <a href="#!" onClick={(e)=>{e.preventDefault();
-                         navigate("login");}}>Login here</a>
+                         navigate("/login");}}>Login here</a>
                       </label>
                     </div>
 
