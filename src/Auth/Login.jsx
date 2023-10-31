@@ -1,7 +1,14 @@
 import PropTypes from 'prop-types';
+import Wrapper from './Wrapper';
+import { useNavigate } from 'react-router-dom';
 
-const Login = ({toggle}) => {
+
+const Login = () => {
+  const navigate = useNavigate();
   return (
+    <Wrapper>
+
+
     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
     <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
@@ -35,11 +42,11 @@ const Login = ({toggle}) => {
 
                       <label className="form-check-label pointer" htmlFor="form2Example3">
                         {"Don't"} have account? <a href="#!" onClick={(e)=>{e.preventDefault();
-                        toggle("1")}}>Signup here</a>
+                        navigate("signup")}}>Signup here</a>
                       </label>
                     </div>
 
-  </div>
+  </div> </Wrapper>
   )
 }
 Login.propTypes = {
