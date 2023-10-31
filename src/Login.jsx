@@ -1,77 +1,50 @@
-import { createRef } from "react";
-import "./style.css";
+import PropTypes from 'prop-types';
 
-export default function Login() {
-  const formRef = createRef();
-  const loginTextRef= createRef()
-
-  const toggleLoginBtnClick=()=>{
-    if(loginTextRef?.current &&formRef?.current)
-    {
-        formRef.current.style.marginLeft = "0%";
-        loginTextRef.current.style.marginLeft = "0%";
-    }
-
-  }
-  const toggleSignupBtnClick=()=>{
-    if(loginTextRef?.current &&formRef?.current)
-    {
-        formRef.current.style.marginLeft = "-50%";
-        loginTextRef.current.style.marginLeft = "-50%";
-    }
-
-
-  }
-
+const Login = ({toggle}) => {
   return (
-    <>
-       <div className="wrapper">
-      <div className="title-text">
-        <div className="title login" ref={loginTextRef}>Login Form</div>
-        <div className="title signup">Signup Form</div>
-      </div>
-      <div className="form-container">
-        <div className="slide-controls">
-          <input type="radio" name="slide" id="login" checked />
-          <input type="radio" name="slide" id="signup" />
-          <label htmlFor="login" className="slide login" onClick={toggleLoginBtnClick}>Login</label>
-          <label htmlFor="signup" className="slide signup" onClick={toggleSignupBtnClick}>Signup</label>
-          <div className="slider-tab"></div>
-        </div>
-        <div className="form-inner">
-          <form action="#" className="login" ref={formRef}>
-            <div className="field">
-              <input type="text" placeholder="Email Address" required />
-            </div>
-            <div className="field">
-              <input type="password" placeholder="Password" required />
-            </div>
-            <div className="pass-link"><a href="#">Forgot password?</a></div>
-            <div className="field btn">
-              <div className="btn-layer"></div>
-              <input type="submit" value="Login" />
-            </div>
-            {/* <div className="signup-link">Not a member? <a href="" onClick={signUpLinkClick}>Signup now</a></div> */}
-          </form>
-          <form action="#" className="signup">
-            <div className="field">
-              <input type="text" placeholder="Email Address" required />
-            </div>
-            <div className="field">
-              <input type="password" placeholder="Password" required />
-            </div>
-            <div className="field">
-              <input type="password" placeholder="Confirm password" required />
-            </div>
-            <div className="field btn">
-              <div className="btn-layer"></div>
-              <input type="submit" value="Signup" />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-    </>
-  );
+    <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
+
+    <form className="mx-1 mx-md-4">
+
+      <div className="d-flex flex-row align-items-center mb-4">
+        <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
+        <div className="form-outline flex-fill mb-0">
+        <label className="form-label" htmlFor="form3Example3c"> Email</label>
+          <input type="email" id="form3Example3c" className="form-control" />
+
+        </div>
+      </div>
+
+      <div className="d-flex flex-row align-items-center mb-4">
+        <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
+        <div className="form-outline flex-fill mb-0">
+        <label className="form-label" htmlFor="form3Example4c">Password</label>
+          <input type="password" id="form3Example4c" className="form-control" autoComplete="password" />
+        </div>
+      </div>
+
+
+      <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+        <button type="button" className="btn btn-primary btn-lg">Login</button>
+      </div>
+
+    </form>
+    <div className="form-check d-flex justify-content-center mb-5">
+
+                      <label className="form-check-label pointer" htmlFor="form2Example3">
+                        {"Don't"} have account? <a href="#!" onClick={(e)=>{e.preventDefault();
+                        toggle("1")}}>Signup here</a>
+                      </label>
+                    </div>
+
+  </div>
+  )
 }
+Login.propTypes = {
+
+    toggle: PropTypes.func,
+};
+
+export default Login
