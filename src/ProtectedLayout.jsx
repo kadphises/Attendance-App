@@ -1,10 +1,10 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LogoutIcon from "./Auth/Icons/LogoutIcon";
+import LogoutIcon from "./Icons/LogoutIcon";
 import { getToken, deleteToken } from "./helper";
 import { useNavigate } from "react-router-dom";
-import Wrapper from "./Auth/Wrapper";
+import Wrapper from "./Wrapper";
 
 const ProtectedLayout = () => {
   const location = useLocation();

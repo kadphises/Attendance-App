@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Wrapper from "./Wrapper";
+import Wrapper from "../Wrapper";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";

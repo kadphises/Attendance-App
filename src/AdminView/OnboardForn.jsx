@@ -5,7 +5,7 @@ import { useState } from "react";
 // import { auth } from "../firebase";
 import { Button, Input, Spinner } from "reactstrap";
 import { toast } from "react-toastify";
-import { sendAllowedList } from "../db";
+import { sendAllowedList } from "../../db";
 
 const Onboard = ({ previousList, fetchAgain }) => {
   const [email, setEmail] = useState("");

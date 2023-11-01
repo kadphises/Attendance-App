@@ -1,5 +1,5 @@
-import OnboardForm from "./OnboardForn";
-import OnboardedUsers from "./OnboardedUsers";
+import OnboardForm from "./AdminView/OnboardForn";
+import OnboardedUsers from "./AdminView/OnboardedUsers";
 import { getAllowedEmailList } from "../db";
 import { useEffect } from "react";
 import { useCallback } from "react";
