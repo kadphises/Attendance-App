@@ -2,16 +2,20 @@ import Login from "./Auth/Login";
 import Signup from "./Auth/SignUp";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { HashRouter } from "react-router-dom";
-import Home from "./Auth/Home";
+import AdminScreen from "./AdminView/AdminScreen";
 import ProtectedLayout from "./ProtectedLayout";
+import RecordScreen from "./UserView/RecordScreen";
+import TimeEnteries from "./UserView/TimeEnteries";
 
 function App() {
   return (
     <HashRouter>
       <Routes>
         <Route element={<ProtectedLayout />} path="/">
-          <Route element={<Navigate to="/home" />} index />
-          <Route element={<Home />} path="home" />
+          <Route element={<Navigate to="/admin" />} index />
+          <Route element={<RecordScreen />} path="record-screen" />
+          <Route element={<TimeEnteries />} path="time-enteries" />
+          <Route element={<AdminScreen />} path="admin" />
         </Route>
         <Route element={<Login />} path="login" exact />
         <Route element={<Signup />} path="signup" exact />

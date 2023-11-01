@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
 
-const Home = () => {
+const AdminScreen = () => {
   const [previousList, setPreviousList] = useState([]);
   const fetchMyList = useCallback(async () => {
     const pList = await getAllowedEmailList();
@@ -34,4 +34,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AdminScreen;

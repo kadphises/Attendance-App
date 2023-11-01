@@ -30,7 +30,7 @@ const Signup = () => {
       }
 
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/home", { state: { auth: true } });
+      navigate("/admin", { state: { auth: true } });
       addToken();
     } catch (e) {
       toast.error("Email already registred.", { toastId: "already" });

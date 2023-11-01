@@ -35,7 +35,7 @@ const Login = () => {
 
         /**
         TODO :set auth true here */
-        navigate("/home", { state: { auth: true } });
+        navigate("/admin", { state: { auth: true } });
       }
     } catch (e) {
       setLoading(false);
