@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import LogoutIcon from "./Auth/Icons/LogoutIcon";
 import { getToken, deleteToken } from "./helper";
 import { useNavigate } from "react-router-dom";
+import Wrapper from "./Auth/Wrapper";
 
 const ProtectedLayout = () => {
   const location = useLocation();
@@ -19,14 +20,16 @@ const ProtectedLayout = () => {
   };
 
   return (
-    <div className="p-4">
-      <div style={{ color: "red" }} className="d-flex justify-content-end">
-        <LogoutIcon onClick={logout} />
-      </div>
-      <ToastContainer />
+    <Wrapper noImg>
+      <div className="p-4">
+        <div style={{ color: "red" }} className="d-flex justify-content-end">
+          <LogoutIcon onClick={logout} />
+        </div>
+        <ToastContainer />
 
-      <Outlet />
-    </div>
+        <Outlet />
+      </div>
+    </Wrapper>
   );
 };
 

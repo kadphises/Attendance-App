@@ -1,6 +1,5 @@
 import OnboardForm from "./OnboardForn";
 import OnboardedUsers from "./OnboardedUsers";
-import Wrapper from "./Wrapper";
 import { getAllowedEmailList } from "../db";
 import { useEffect } from "react";
 import { useCallback } from "react";
@@ -20,14 +19,9 @@ const Home = () => {
   }, [fetchMyList]);
 
   return (
-    <div className="p-4">
-      <div>
-        <h4>Hi Abhishek</h4>
-        <Wrapper noImg>
-          <OnboardForm previousList={previousList} fetchAgain={fetchMyList} />
-          <OnboardedUsers users={previousList} fetchAgain={fetchMyList} />
-        </Wrapper>
-      </div>
+    <>
+      <OnboardForm previousList={previousList} fetchAgain={fetchMyList} />
+      <OnboardedUsers users={previousList} fetchAgain={fetchMyList} />
       {/* <div>
         <Button color="primary" className="mx-3" onClick={recordTime}>
           Record CheckIn time
@@ -36,7 +30,7 @@ const Home = () => {
           Record CheckOut time
         </Button>{" "}
       </div> */}
-    </div>
+    </>
   );
 };
 
