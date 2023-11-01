@@ -1,17 +1,21 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-// import { isAuthenticated } from '@/helpers/login';
-
-// import Layout from './Layout';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProtectedLayout = () => {
   const location = useLocation();
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   if (!isAuthenticated) {
     return <Navigate replace state={{ from: location }} to="/login" />;
   }
 
-  return <Outlet />;
+  return (
+    <>
+      <ToastContainer />
+      <Outlet />
+    </>
+  );
 };
 
 export default ProtectedLayout;

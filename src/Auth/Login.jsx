@@ -1,9 +1,30 @@
 import PropTypes from "prop-types";
 import Wrapper from "./Wrapper";
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { Button, Input } from "reactstrap";
 const Login = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = async () => {
+    try {
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      if (response?.user) {
+        console.log(response?.user);
+        /**
+        TODO :set auth true here */
+        navigate("/home");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const disabled = !email || !password;
+
   return (
     <Wrapper>
       <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
@@ -17,8 +38,10 @@ const Login = () => {
                 {" "}
                 Email
               </label>
-              <input
+              <Input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 id="form3Example3c"
                 className="form-control"
               />
@@ -31,9 +54,11 @@ const Login = () => {
               <label className="form-label" htmlFor="form3Example4c">
                 Password
               </label>
-              <input
+              <Input
                 type="password"
                 id="form3Example4c"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="form-control"
                 autoComplete="password"
               />
@@ -41,9 +66,14 @@ const Login = () => {
           </div>
 
           <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-            <button type="button" className="btn btn-primary btn-lg">
+            <Button
+              color="primary"
+              className="btn-lg"
+              disabled={disabled}
+              onClick={login}>
+              {" "}
               Login
-            </button>
+            </Button>
           </div>
         </form>
         <div className="form-check d-flex justify-content-center mb-5">

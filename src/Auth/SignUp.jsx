@@ -3,36 +3,53 @@ import Wrapper from "./Wrapper";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { Button, FormFeedback, Input } from "reactstrap";
+import { Button, FormFeedback, Input, Spinner } from "reactstrap";
 import { useState } from "react";
+import { useEffect } from "react";
+import { useCallback } from "react";
+import { getAllowedEmailList } from "../db";
+import { ToastContainer, toast } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
-  const [already, setAlready] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [previousList, setPreviousList] = useState([]);
 
   const signUp = async () => {
-    setAlready(false);
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      if (response.error.message === "EMAIL_EXISTS") {
-        setAlready(true);
+      setLoading(true);
+      if (!previousList?.includes(email.trim())) {
+        toast.error("Email not authorised by admin.", { toastId: "no_auth" });
+        setLoading(false);
+        return;
       }
+
+      await createUserWithEmailAndPassword(auth, email, password);
     } catch (e) {
-      console.log(e);
+      toast.error("Email already registred.", { toastId: "already" });
+    } finally {
+      setLoading(false);
     }
   };
+  const fetchMyList = useCallback(async () => {
+    const pList = await getAllowedEmailList();
+    console.log(pList);
+    if (pList) setPreviousList(pList);
+  }, []); // if userId changes, useEffect will run again
+
+  useEffect(() => {
+    if (!loading) fetchMyList();
+  }, [fetchMyList, loading]);
 
   const disabled = !email || !password || !cPassword || cPassword !== password;
+
   return (
     <Wrapper>
-      {" "}
+      <ToastContainer />
       <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
         <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
@@ -47,12 +64,10 @@ const Signup = () => {
               <Input
                 type="email"
                 value={email}
-                invalid={already}
                 onChange={(e) => setEmail(e.target.value)}
                 id="form3Example3c"
                 className="form-control"
               />
-              <FormFeedback invalid>Email already exists.</FormFeedback>
             </div>
           </div>
 
@@ -109,10 +124,11 @@ const Signup = () => {
           <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
             <Button
               color="primary"
-              className="btn-lg"
+              style={{ minWidth: "140px" }}
+              className="btn-lg px-4 px-2"
               disabled={disabled}
               onClick={signUp}>
-              Register
+              {loading ? <Spinner size="sm" /> : "Register"}
             </Button>
           </div>
         </form>
