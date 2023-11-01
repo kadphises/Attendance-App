@@ -34,8 +34,10 @@ const Login = () => {
         addToken();
 
         /**
-        TODO :set auth true here */
-        navigate("/admin", { state: { auth: true } });
+      TODO admin mode */
+        if (email === "abhi@pal.com")
+          navigate("/admin", { state: { auth: true } });
+        else navigate("/record-screen", { state: { auth: true } });
       }
     } catch (e) {
       setLoading(false);

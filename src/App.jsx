@@ -12,7 +12,7 @@ function App() {
     <HashRouter>
       <Routes>
         <Route element={<ProtectedLayout />} path="/">
-          <Route element={<Navigate to="/admin" />} index />
+          {/* <Route element={<Navigate to="/admin" />} index /> */}
           <Route element={<RecordScreen />} path="record-screen" />
           <Route element={<TimeEnteries />} path="time-enteries" />
           <Route element={<AdminScreen />} path="admin" />

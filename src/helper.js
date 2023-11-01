@@ -4,7 +4,7 @@ export const addToken = () => {
   Cookie.set("auth", "true");
 };
 export const getToken = () => {
-  Cookie.get("auth");
+  return Cookie.get("auth");
 };
 export const deleteToken = () => {
   Cookie.remove("auth");

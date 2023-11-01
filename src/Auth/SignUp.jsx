@@ -30,7 +30,11 @@ const Signup = () => {
       }
 
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/admin", { state: { auth: true } });
+      /**
+      TODO admin mode */
+      if (email === "abhi@pal.com")
+        navigate("/admin", { state: { auth: true } });
+      else navigate("/record-screen", { state: { auth: true } });
       addToken();
     } catch (e) {
       toast.error("Email already registred.", { toastId: "already" });

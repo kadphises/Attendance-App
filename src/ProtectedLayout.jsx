@@ -10,7 +10,6 @@ const ProtectedLayout = () => {
   const location = useLocation();
   const isAuthenticated = getToken();
   const navigate = useNavigate();
-  console.log(location);
 
   if (!isAuthenticated) {
     if (!location?.state?.auth)
