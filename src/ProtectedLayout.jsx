@@ -10,7 +10,8 @@ const ProtectedLayout = () => {
   const location = useLocation();
   const isAuthenticated = getToken();
   const navigate = useNavigate();
-  const isAdmin = false;
+  console.log(location);
+
   if (!isAuthenticated) {
     if (!location?.state?.auth)
       return <Navigate replace state={{ from: location }} to="/login" />;

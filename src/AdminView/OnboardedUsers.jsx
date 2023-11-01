@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Spinner, Table } from "reactstrap";
 import DeleteIcon from "../Icons/DeleteIcon";
-import { sendAllowedList } from "../../db";
+import { sendAllowedList } from "../db";
 import { toast } from "react-toastify";
 
 import { useState } from "react";
