@@ -1,20 +1,32 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LogoutIcon from "./Auth/Icons/LogoutIcon";
+import { getToken, deleteToken } from "./helper";
+import { useNavigate } from "react-router-dom";
 
 const ProtectedLayout = () => {
   const location = useLocation();
-  const isAuthenticated = true;
-
+  const isAuthenticated = getToken();
+  const navigate = useNavigate();
   if (!isAuthenticated) {
-    return <Navigate replace state={{ from: location }} to="/login" />;
+    if (!location?.state?.auth)
+      return <Navigate replace state={{ from: location }} to="/login" />;
   }
+  const logout = () => {
+    deleteToken();
+    navigate("/login");
+  };
 
   return (
-    <>
+    <div className="p-4">
+      <div style={{ color: "red" }} className="d-flex justify-content-end">
+        <LogoutIcon onClick={logout} />
+      </div>
       <ToastContainer />
+
       <Outlet />
-    </>
+    </div>
   );
 };
 

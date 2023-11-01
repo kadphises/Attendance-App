@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useCallback } from "react";
 import { getAllowedEmailList } from "../db";
 import { ToastContainer, toast } from "react-toastify";
+import { addToken } from "../helper";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ const Signup = () => {
       }
 
       await createUserWithEmailAndPassword(auth, email, password);
+      navigate("/home", { state: { auth: true } });
+      addToken();
     } catch (e) {
       toast.error("Email already registred.", { toastId: "already" });
     } finally {

@@ -4,29 +4,59 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { Button, Input } from "reactstrap";
+import { Button, Input, Spinner } from "reactstrap";
+import { useEffect } from "react";
+import { useCallback } from "react";
+import { getAllowedEmailList } from "../db";
+import { ToastContainer, toast } from "react-toastify";
+import { addToken } from "../helper";
+
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [previousList, setPreviousList] = useState([]);
 
   const login = async () => {
+    console.log(auth.currentUser.email);
     try {
+      setLoading(true);
+      if (!previousList?.includes(email.trim())) {
+        toast.error("Email not registered or authorisation removed.", {
+          toastId: "no_auuth",
+        });
+        setLoading(false);
+        return;
+      }
       const response = await signInWithEmailAndPassword(auth, email, password);
       if (response?.user) {
-        console.log(response?.user);
+        addToken();
+
         /**
         TODO :set auth true here */
-        navigate("/home");
+        navigate("/home", { state: { auth: true } });
       }
     } catch (e) {
-      console.log(e);
+      setLoading(false);
     }
   };
+
+  const fetchMyList = useCallback(async () => {
+    const pList = await getAllowedEmailList();
+    console.log(pList);
+    if (pList) setPreviousList(pList);
+  }, []); // if userId changes, useEffect will run again
+
+  useEffect(() => {
+    fetchMyList();
+  }, [fetchMyList]);
+
   const disabled = !email || !password;
 
   return (
     <Wrapper>
+      <ToastContainer />
       <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
         <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
 
@@ -68,11 +98,11 @@ const Login = () => {
           <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
             <Button
               color="primary"
-              className="btn-lg"
+              style={{ minWidth: "140px" }}
+              className="btn-lg px-4 px-2"
               disabled={disabled}
               onClick={login}>
-              {" "}
-              Login
+              {loading ? <Spinner size="sm" /> : "Login"}
             </Button>
           </div>
         </form>
