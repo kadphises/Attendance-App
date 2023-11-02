@@ -6,8 +6,20 @@ export const initialState = {
   isFetchingAllowedUsers: false,
   isFetchingTimeEnteries: false,
   timeEnteries: null,
+  statusCounter: 0,
 };
-
+export const getStatusCounter = (list) => {
+  if (!list || !list?.length) return 0;
+  else {
+    let total = 0;
+    list.forEach((element) => {
+      const cIn = element.checkInTime;
+      const cOut = element.checkOutTime;
+      total = total + cOut - cIn;
+    });
+    return total;
+  }
+};
 export const attendenaceReducer = (state, action) => {
   switch (action.type) {
     case "FETCH_USER_ENTERIES_STATE":
@@ -16,8 +28,11 @@ export const attendenaceReducer = (state, action) => {
       return { ...state, isFetchingAllowedUsers: action.payload };
     case "SET_ALLOWED_USERS_LIST":
       return { ...state, allowedUsersList: action.payload };
-    case "SET_TIME_ENTERIES":
+    case "SET_TIME_ENTERIES": {
+      // const sC = getStatusCounter(action.payload);
       return { ...state, timeEnteries: action.payload };
+      // return { ...state, timeEnteries: action.payload, statusCounter: sC };
+    }
 
     default:
       return state;

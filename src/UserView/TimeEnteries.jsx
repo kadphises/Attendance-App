@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Table } from "reactstrap";
 import AttendanceContext from "../Provider";
+import { useEffect } from "react";
 
 // import {
 //   formatDateAs11thMonth,
@@ -16,8 +17,13 @@ function randomIntFromInterval(min, max) {
 }
 
 const TimeEnteries = ({ total = 0 }) => {
-  const [state] = useContext(AttendanceContext);
+  const [state, dispatch] = useContext(AttendanceContext);
   const { timeEnteries } = state;
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_USER_ENTERIES" });
+  }, [dispatch]);
+
   return (
     <>
       <h3>Summary of last 45 days</h3>

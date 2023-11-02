@@ -6,18 +6,20 @@ import { useState } from "react";
 import { Button, Input, Spinner } from "reactstrap";
 import { toast } from "react-toastify";
 import { sendAllowedList } from "../db";
+import { useContext } from "react";
+import AttendanceContext from "../Provider";
 
-const Onboard = ({ previousList, fetchAgain }) => {
+const Onboard = () => {
   const [email, setEmail] = useState("");
+  const [state, dispatch] = useContext(AttendanceContext);
 
   const [loading, setLoading] = useState(false);
   const addUser = async () => {
     try {
       setLoading(true);
 
-      if (!previousList?.includes(email.trim())) {
-        await sendAllowedList([...previousList, email]);
-        fetchAgain();
+      if (!state?.allowedUsersList?.includes(email.trim())) {
+        await sendAllowedList([...state.allowedUsersList, email]);
 
         toast.success("User added successfully!", { toastId: "success" });
       } else {
@@ -28,6 +30,7 @@ const Onboard = ({ previousList, fetchAgain }) => {
 
       console.log(e);
     } finally {
+      dispatch({ type: "FETCH_ALLOWED_USERS" });
       setLoading(false);
     }
   };

@@ -1,27 +1,22 @@
 import OnboardForm from "./OnboardForn";
 import OnboardedUsers from "./OnboardedUsers";
-import { getAllowedEmailList } from "../db";
+
 import { useEffect } from "react";
-import { useCallback } from "react";
-import { useState } from "react";
+
+import { useContext } from "react";
+import AttendanceContext from "./../Provider";
 
 const AdminScreen = () => {
-  const [previousList, setPreviousList] = useState([]);
-  const fetchMyList = useCallback(async () => {
-    const pList = await getAllowedEmailList();
-
-    console.log(pList);
-    if (pList) setPreviousList(pList);
-  }, []); // if userId changes, useEffect will run again
+  const [state, dispatch] = useContext(AttendanceContext);
 
   useEffect(() => {
-    fetchMyList();
-  }, [fetchMyList]);
+    dispatch({ type: "FETCH_ALLOWED_USERS" });
+  }, [dispatch]);
 
   return (
     <>
-      <OnboardForm previousList={previousList} fetchAgain={fetchMyList} />
-      <OnboardedUsers users={previousList} fetchAgain={fetchMyList} />
+      <OnboardForm state={state} />
+      <OnboardedUsers />
       {/* <div>
         <Button color="primary" className="mx-3" onClick={recordTime}>
           Record CheckIn time

@@ -6,24 +6,24 @@ import { auth } from "../firebase";
 import { Button, FormFeedback, Input, Spinner } from "reactstrap";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useCallback } from "react";
-import { getAllowedEmailList } from "../db";
 import { ToastContainer, toast } from "react-toastify";
 import { addToken } from "../helper";
+import { useContext } from "react";
+import AttendanceContext from "./../Provider";
 
 const Signup = () => {
+  const [state, dispatch] = useContext(AttendanceContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [previousList, setPreviousList] = useState([]);
 
   const signUp = async () => {
     try {
       setLoading(true);
-      if (!previousList?.includes(email.trim())) {
+      if (!state?.allowedUsersList?.includes(email.trim())) {
         toast.error("Email not authorised by admin.", { toastId: "no_auth" });
         setLoading(false);
         return;
@@ -42,16 +42,9 @@ const Signup = () => {
       setLoading(false);
     }
   };
-  const fetchMyList = useCallback(async () => {
-    const pList = await getAllowedEmailList();
-    console.log(pList);
-    if (pList) setPreviousList(pList);
-  }, []); // if userId changes, useEffect will run again
-
   useEffect(() => {
-    if (!loading) fetchMyList();
-  }, [fetchMyList, loading]);
-
+    dispatch({ type: "FETCH_ALLOWED_USERS" });
+  }, [dispatch]);
   const disabled = !email || !password || !cPassword || cPassword !== password;
 
   return (

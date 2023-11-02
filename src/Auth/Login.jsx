@@ -6,23 +6,23 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { Button, Input, Spinner } from "reactstrap";
 import { useEffect } from "react";
-import { useCallback } from "react";
-import { getAllowedEmailList } from "../db";
 import { ToastContainer, toast } from "react-toastify";
 import { addToken } from "../helper";
+import { useContext } from "react";
+import AttendanceContext from "./../Provider";
 
 const Login = () => {
+  const [state, dispatch] = useContext(AttendanceContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [previousList, setPreviousList] = useState([]);
 
   const login = async () => {
     console.log(auth.currentUser.email);
     try {
       setLoading(true);
-      if (!previousList?.includes(email.trim())) {
+      if (!state?.allowedUsersList?.includes(email.trim())) {
         toast.error("Email not registered or authorisation removed.", {
           toastId: "no_auuth",
         });
@@ -44,15 +44,9 @@ const Login = () => {
     }
   };
 
-  const fetchMyList = useCallback(async () => {
-    const pList = await getAllowedEmailList();
-    console.log(pList);
-    if (pList) setPreviousList(pList);
-  }, []); // if userId changes, useEffect will run again
-
   useEffect(() => {
-    fetchMyList();
-  }, [fetchMyList]);
+    dispatch({ type: "FETCH_ALLOWED_USERS" });
+  }, [dispatch]);
 
   const disabled = !email || !password;
 
