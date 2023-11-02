@@ -5,11 +5,12 @@ import { useContext } from "react";
 import AttendanceContext from "../Provider";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const RecordScreen = () => {
-  const [state] = useContext(AttendanceContext);
+  const [state, dispatch] = useContext(AttendanceContext);
+
   const [loading, setLoading] = useState(false);
-  console.log(state);
 
   const enterCheckInTime = async () => {
     try {
@@ -21,23 +22,28 @@ const RecordScreen = () => {
         toastId: "recchckinfail",
       });
     } finally {
+      dispatch({ type: "FETCH_USER_ENTERIES" });
       setLoading(false);
     }
   };
   const enterCheckOutTime = async () => {
     try {
       setLoading(true);
-      await addCheckOutTime();
+      await addCheckOutTime(state?.timeEnteries);
       toast.success("Check-out time recorded", { toastId: "recchckout" });
     } catch (e) {
       toast.error("Unable to record Check-out time", {
         toastId: "recchckoutfail",
       });
     } finally {
+      dispatch({ type: "FETCH_USER_ENTERIES" });
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    dispatch({ type: "FETCH_USER_ENTERIES" });
+  }, [dispatch]);
   return (
     <>
       <h3>Record your time</h3>

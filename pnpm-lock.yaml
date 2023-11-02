@@ -32,6 +32,9 @@ dependencies:
   reactstrap:
     specifier: ^9.2.0
     version: 9.2.0(react-dom@18.2.0)(react@18.2.0)
+  use-reducer-async:
+    specifier: ^2.1.1
+    version: 2.1.1(react@18.2.0)
 
 devDependencies:
   '@types/react':
@@ -2961,6 +2964,14 @@ packages:
     dependencies:
       punycode: 2.3.0
     dev: true
+
+  /use-reducer-async@2.1.1(react@18.2.0):
+    resolution: {integrity: sha512-oPSFzOIEPgMenQkMHzqeRgsQLSpcyGkspAnyTWP4l1tKlt31wMVMz6wWj6g/jea/Ms7lRvBz4AL+Okt83Tntig==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /vite@4.5.0:
     resolution: {integrity: sha512-ulr8rNLA6rkyFAlVWw2q5YJ91v098AFQ2R0PRFwPzREXOUJQPtFUG0t+/ZikhaOCDqFoDhN6/v8Sq0o4araFAw==}

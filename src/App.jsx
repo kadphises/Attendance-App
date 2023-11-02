@@ -7,10 +7,20 @@ import ProtectedLayout from "./ProtectedLayout";
 import RecordScreen from "./UserView/RecordScreen";
 import TimeEnteries from "./UserView/TimeEnteries";
 import AttendanceContext from "./Provider";
-import { useReducer } from "react";
-import { attendenaceReducer, initialState } from "./reducer";
+import { useReducerAsync } from "use-reducer-async";
+import {
+  attendenaceReducer,
+  initialState,
+  asyncActionHandlers,
+} from "./reducer";
+
 function App() {
-  const [state, dispatch] = useReducer(attendenaceReducer, initialState);
+  const [state, dispatch] = useReducerAsync(
+    attendenaceReducer,
+    initialState,
+    asyncActionHandlers
+  );
+
   return (
     <AttendanceContext.Provider value={[state, dispatch]}>
       <HashRouter>
