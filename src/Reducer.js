@@ -7,6 +7,9 @@ export const initialState = {
   isFetchingTimeEnteries: false,
   timeEnteries: null,
   summary: null,
+  cInEnabled: false,
+  cOutEnabled: false,
+  todayEntry: null,
 };
 export const getStatusCounter = (list) => {
   if (!list || !list?.length) return null;
@@ -21,18 +24,72 @@ export const getStatusCounter = (list) => {
     return { sum_time: Math.abs(total), status: total >= 0 ? true : false };
   }
 };
-export const attendenaceReducer = (state, action) => {
-  switch (action.type) {
+export const checkBtnState = (list) => {
+  if (!list) return { cIn: false, cOut: false };
+  if (list.length === 0) return { cIn: true, cOut: false };
+  else {
+    const date = new Date().getDate();
+    const month = new Date().getMonth();
+    const lastEntry = list[list.length - 1];
+    const lastEntryMonth = new Date(lastEntry.checkInTime).getMonth();
+    const lastEntryDate = new Date(lastEntry.checkInTime).getDate();
+    /**
+    corresponds that entry is created and is of today it means created by checkInEnabled */
+    if (lastEntry && lastEntryDate && lastEntryMonth) {
+      if (
+        date === lastEntryDate &&
+        lastEntryMonth === month &&
+        lastEntry?.checkInTime &&
+        lastEntry?.checkOutTime
+      )
+        return { cIn: false, cOut: false };
+      if (
+        date === lastEntryDate &&
+        lastEntryMonth === month &&
+        lastEntry?.checkInTime &&
+        !lastEntryDate?.checkOutTime
+      )
+        return { cIn: false, cOut: true };
+      if (lastEntryDate === date - 1) return { cIn: true, cOut: true };
+    }
+
+    return { cIn: true, cOut: true };
+  }
+};
+const getTodayEntry = (list) => {
+  if (!list) return null;
+  else {
+    const date = new Date().getDate();
+    const month = new Date().getMonth();
+    const lastEntry = list[list.length - 1];
+    const lastEntryMonth = new Date(lastEntry.checkInTime).getMonth();
+    const lastEntryDate = new Date(lastEntry.checkInTime).getDate();
+    if (date === lastEntryDate && lastEntryMonth === month && lastEntry)
+      return lastEntry;
+  }
+};
+export const attendenaceReducer = (state, { type, payload }) => {
+  switch (type) {
     case "FETCH_USER_ENTERIES_STATE":
-      return { ...state, isFetchingTimeEnteries: action.payload };
+      return { ...state, isFetchingTimeEnteries: payload };
     case "FETCH_ALLOWED_USER_STATE":
-      return { ...state, isFetchingAllowedUsers: action.payload };
+      return { ...state, isFetchingAllowedUsers: payload };
     case "SET_ALLOWED_USERS_LIST":
-      return { ...state, allowedUsersList: action.payload };
+      return { ...state, allowedUsersList: payload };
     case "SET_TIME_ENTERIES": {
-      const sC = getStatusCounter(action.payload);
+      const sC = getStatusCounter(payload);
       // return { ...state, timeEnteries: action.payload };
-      return { ...state, timeEnteries: action.payload, summary: sC };
+
+      const { cIn, cOut } = checkBtnState(payload);
+      const lEn = getTodayEntry(payload);
+      return {
+        ...state,
+        timeEnteries: payload,
+        summary: sC,
+        cInEnabled: cIn,
+        cOutEnabled: cOut,
+        todayEntry: lEn,
+      };
     }
 
     default:
