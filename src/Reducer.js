@@ -6,18 +6,19 @@ export const initialState = {
   isFetchingAllowedUsers: false,
   isFetchingTimeEnteries: false,
   timeEnteries: null,
-  statusCounter: 0,
+  summary: null,
 };
 export const getStatusCounter = (list) => {
-  if (!list || !list?.length) return 0;
+  if (!list || !list?.length) return null;
   else {
     let total = 0;
     list.forEach((element) => {
       const cIn = element.checkInTime;
       const cOut = element.checkOutTime;
-      total = total + cOut - cIn;
+      total = total + cOut - cIn - 9 * 60 * 60 * 1000;
     });
-    return total;
+    console.log("fff", total);
+    return { sum_time: Math.abs(total), status: total >= 0 ? true : false };
   }
 };
 export const attendenaceReducer = (state, action) => {
@@ -29,9 +30,9 @@ export const attendenaceReducer = (state, action) => {
     case "SET_ALLOWED_USERS_LIST":
       return { ...state, allowedUsersList: action.payload };
     case "SET_TIME_ENTERIES": {
-      // const sC = getStatusCounter(action.payload);
-      return { ...state, timeEnteries: action.payload };
-      // return { ...state, timeEnteries: action.payload, statusCounter: sC };
+      const sC = getStatusCounter(action.payload);
+      // return { ...state, timeEnteries: action.payload };
+      return { ...state, timeEnteries: action.payload, summary: sC };
     }
 
     default:

@@ -50,3 +50,21 @@ export const formatTimeFromTimestamp = (timestamp) => {
   const formattedTime = `${hours}:${minutes}:${seconds} ${period}`;
   return formattedTime;
 };
+
+function formatTimeUnit(value, unit) {
+  return `${value} ${unit}${value !== 1 ? "s" : ""}`;
+}
+
+export const calculateTimeElapsed = (elapsedTime) => {
+  // Calculate elapsed time in milliseconds
+
+  // Convert milliseconds to hours, minutes, and seconds
+  const hours = Math.floor(elapsedTime / (1000 * 60 * 60));
+  const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+
+  return `${formatTimeUnit(hours, "hour")} ${formatTimeUnit(
+    minutes,
+    "minute"
+  )} ${formatTimeUnit(seconds, "second")}`;
+};

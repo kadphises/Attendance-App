@@ -1,6 +1,6 @@
 import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db, auth } from "./firebase";
-import { testdata1 } from "./test-data";
+// import { testdata1 } from "./test-data";
 
 const month = [
   "jan",
@@ -38,7 +38,7 @@ export const addCheckInTime = async () => {
   const entryData = {
     month: month[date.getMonth()],
     date: date.getDate(),
-    checkInTime: "8.40PM",
+    checkInTime: Date.now(),
     checkOutTime: null,
   };
 
@@ -65,7 +65,7 @@ export const addCheckInTime = async () => {
     const usersListRef = collection(db, "usersList");
 
     await setDoc(doc(usersListRef, auth.currentUser.email), {
-      list: testdata1,
+      list: [entryData],
     });
     console.log("document created and entry added");
   }
@@ -83,7 +83,7 @@ export const addCheckOutTime = async (list) => {
     const currentQueue = list;
     if (currentQueue) {
       const lastEntry = currentQueue[currentQueue.length - 1];
-      const newEntry = { ...lastEntry, checkOutTime: "10:23PM" };
+      const newEntry = { ...lastEntry, checkOutTime: Date.now() };
       currentQueue.pop();
       currentQueue.push(newEntry);
     }
