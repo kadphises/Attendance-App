@@ -16,9 +16,11 @@ export const getStatusCounter = (list) => {
   else {
     let total = 0;
     list.forEach((element) => {
-      const cIn = element.checkInTime;
-      const cOut = element.checkOutTime;
-      total = total + cOut - cIn - 9 * 60 * 60 * 1000;
+      if (element.checkInTime && element.checkOutTime) {
+        const cIn = element.checkInTime;
+        const cOut = element.checkOutTime;
+        total = total + cOut - cIn - 9 * 60 * 60 * 1000;
+      }
     });
     console.log("fff", total);
     return { sum_time: Math.abs(total), status: total >= 0 ? true : false };
@@ -57,7 +59,7 @@ export const checkBtnState = (list) => {
   }
 };
 const getTodayEntry = (list) => {
-  if (!list) return null;
+  if (!list || !list.length) return null;
   else {
     const date = new Date().getDate();
     const month = new Date().getMonth();

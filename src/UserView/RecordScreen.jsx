@@ -7,7 +7,10 @@ import AttendanceContext from "../Provider";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useEffect } from "react";
-import { formatTimeFromTimestamp } from "../dateFormatter";
+import {
+  calculateTimeElapsed,
+  formatTimeFromTimestamp,
+} from "../dateFormatter";
 const TodayEntry = ({ t_Entry }) => {
   if (!t_Entry) return null;
 
@@ -38,7 +41,13 @@ const TodayEntry = ({ t_Entry }) => {
 
 const RecordScreen = () => {
   const [state, dispatch] = useContext(AttendanceContext);
-  const { cInEnabled, cOutEnabled, todayEntry } = state;
+  const {
+    cInEnabled,
+    cOutEnabled,
+    todayEntry,
+    summary,
+    isFetchingTimeEnteries,
+  } = state;
 
   const [loading, setLoading] = useState(false);
 
@@ -79,6 +88,29 @@ const RecordScreen = () => {
       <div className="d-flex">
         <h3 className="col-6">Record your time</h3>
         <TodayEntry t_Entry={todayEntry} />
+      </div>
+      <div>
+        {summary !== null ? (
+          <div>
+            {isFetchingTimeEnteries ? (
+              <p className="placeholder-glow">
+                <span className="placeholder col-8"></span>
+              </p>
+            ) : (
+              <p>
+                You are currently
+                <span
+                  className="fw-bold"
+                  style={{ color: summary?.status ? "green" : "red" }}>
+                  {summary?.status
+                    ? ` ${calculateTimeElapsed(summary?.sum_time)} ahead `
+                    : ` ${calculateTimeElapsed(summary?.sum_time)} behind `}
+                </span>{" "}
+                the schedule for this month
+              </p>
+            )}{" "}
+          </div>
+        ) : null}
       </div>
 
       <div className="mt-4">

@@ -63,8 +63,7 @@ export const calculateTimeElapsed = (elapsedTime) => {
   const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
 
-  return `${formatTimeUnit(hours, "hour")} ${formatTimeUnit(
-    minutes,
-    "minute"
-  )} ${formatTimeUnit(seconds, "second")}`;
+  return `${hours ? formatTimeUnit(hours, "hour") : " "} ${
+    minutes ? formatTimeUnit(minutes, "minute") : ""
+  } ${seconds ? formatTimeUnit(seconds, "second") : ""}`;
 };

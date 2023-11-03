@@ -14,11 +14,9 @@ import {
 const TimeEnteries = () => {
   const [state, dispatch] = useContext(AttendanceContext);
   const { timeEnteries, summary, isFetchingTimeEnteries } = state;
-
   useEffect(() => {
     dispatch({ type: "FETCH_USER_ENTERIES" });
   }, [dispatch]);
-
   return (
     <>
       <h3>Summary of enteries</h3>
@@ -38,7 +36,7 @@ const TimeEnteries = () => {
                   ? ` ${calculateTimeElapsed(summary?.sum_time)} ahead `
                   : ` ${calculateTimeElapsed(summary?.sum_time)} behind `}
               </span>{" "}
-              the schedule
+              the schedule for this month
             </p>
           )}{" "}
         </div>
@@ -54,32 +52,39 @@ const TimeEnteries = () => {
               <th>Date and Month</th>
               <th> CheckIn Time</th>
               <th>CheckOut TIme</th>
-              <th>+/-</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {timeEnteries?.toReversed()?.map((el, index) => {
-              const tt = el.checkOutTime - el.checkInTime;
+              const { checkOutTime, checkInTime } = el;
+              const bothExist = checkInTime && checkOutTime;
+              const tt = bothExist ? checkOutTime - checkInTime : "-";
               // const elapsedTime = Math.abs(tt);
-              const nineHoursInMillisecondsDiff = 9 * 60 * 60 * 1000 - tt;
+              const nineHoursInMillisecondsDiff = bothExist
+                ? 9 * 60 * 60 * 1000 - tt
+                : null;
 
-              const timeStr = calculateTimeElapsed(
-                Math.abs(nineHoursInMillisecondsDiff)
-              );
-
+              const timeStr = bothExist
+                ? calculateTimeElapsed(Math.abs(nineHoursInMillisecondsDiff))
+                : null;
+              const s = bothExist
+                ? {
+                    backgroundColor:
+                      nineHoursInMillisecondsDiff >= 0 ? "red" : "green",
+                  }
+                : {};
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{formatDateAs11thMonth(el.checkInTime)}</td>
-                  <td>{formatTimeFromTimestamp(el.checkInTime)}</td>
-                  <td>{formatTimeFromTimestamp(el.checkOutTime)}</td>
-                  <td
-                    style={{
-                      backgroundColor:
-                        nineHoursInMillisecondsDiff >= 0 ? "red" : "green",
-                    }}>
-                    {timeStr}
+                  <td>{formatDateAs11thMonth(checkInTime)}</td>
+                  <td>{formatTimeFromTimestamp(checkInTime)}</td>
+                  <td>
+                    {checkOutTime
+                      ? formatTimeFromTimestamp(checkOutTime)
+                      : null}
                   </td>
+                  <td style={s}>{timeStr}</td>
                 </tr>
               );
             })}
