@@ -31,7 +31,7 @@ const TimeEnteries = () => {
               You are currently
               <span
                 className="fw-bold"
-                style={{ color: summary?.status ? "#FF6D60" : "#539165" }}>
+                style={{ color: !summary?.status ? "#FF6D60" : "#539165" }}>
                 {summary?.status
                   ? ` ${calculateTimeElapsed(summary?.sum_time)} ahead `
                   : ` ${calculateTimeElapsed(summary?.sum_time)} behind `}

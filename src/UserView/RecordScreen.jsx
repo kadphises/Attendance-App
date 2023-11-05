@@ -101,7 +101,7 @@ const RecordScreen = () => {
                 You are currently
                 <span
                   className="fw-bold"
-                  style={{ color: summary?.status ? "#FF6D60" : "#539165" }}>
+                  style={{ color: !summary?.status ? "#FF6D60" : "#539165" }}>
                   {summary?.status
                     ? ` ${calculateTimeElapsed(summary?.sum_time)} ahead `
                     : ` ${calculateTimeElapsed(summary?.sum_time)} behind `}
@@ -141,17 +141,18 @@ const RecordScreen = () => {
             Check-in and Check-out has been marked for today.
           </div>
         ) : null}
-
-        <div>
-          <div className="d-flex justify-content-end mt-4">
-            <Link
-              to="/time-enteries"
-              style={{ color: "#4FC0D0" }}
-              className="text-decoration-none fw-bold">
-              View last 45 days data
-            </Link>
+        {state?.timeEnteries?.length ? (
+          <div>
+            <div className="d-flex justify-content-end mt-4">
+              <Link
+                to="/time-enteries"
+                style={{ color: "#4FC0D0" }}
+                className="text-decoration-none fw-bold">
+                View last 45 days data
+              </Link>
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </>
   );
