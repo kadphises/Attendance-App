@@ -59,35 +59,32 @@ const OnboardedUsers = ({ users, fetchAgain }) => {
         handleClick={() => removeUser(user)}
       />
       <h4 className="my-2"> Users List</h4>
-
-      {users?.length ? (
-        <Table bordered hover size="sm">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Email</th>
-              <th> </th>
+      <Table bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Email</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          {users?.map((el, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{el}</td>
+              <td style={{ color: "red" }}>
+                <DeleteIcon
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setUser(el);
+                    toggle();
+                  }}
+                />
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {users?.map((el, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{el}</td>
-                <td style={{ color: "red" }}>
-                  <DeleteIcon
-                    className="cursor-pointer"
-                    onClick={() => {
-                      setUser(el);
-                      toggle();
-                    }}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      ) : null}
+          ))}
+        </tbody>
+      </Table>
     </>
   );
 };

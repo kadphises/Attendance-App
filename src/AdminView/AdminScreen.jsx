@@ -16,15 +16,10 @@ const AdminScreen = () => {
   return (
     <>
       <OnboardForm state={state} />
-      <OnboardedUsers />
-      {/* <div>
-        <Button color="primary" className="mx-3" onClick={recordTime}>
-          Record CheckIn time
-        </Button>
-        <Button color="primary" className="mx-3">
-          Record CheckOut time
-        </Button>{" "}
-      </div> */}
+      <OnboardedUsers
+        users={state?.allowedUsersList}
+        fetchAgain={() => dispatch({ type: "FETCH_ALLOWED_USERS" })}
+      />
     </>
   );
 };
