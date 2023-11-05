@@ -7,7 +7,7 @@ import { auth } from "../firebase";
 import { Button, Input, Spinner } from "reactstrap";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { addToken } from "../helper";
+import { addAuthEmail, addToken } from "../helper";
 import { useContext } from "react";
 import AttendanceContext from "./../Provider";
 
@@ -29,9 +29,14 @@ const Login = () => {
         setLoading(false);
         return;
       }
-      const response = await signInWithEmailAndPassword(auth, email, password);
+      const response = await signInWithEmailAndPassword(
+        auth,
+        email.trim(),
+        password
+      );
       if (response?.user) {
         addToken();
+        addAuthEmail(email.trim());
 
         /**
       TODO admin mode */

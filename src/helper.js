@@ -9,3 +9,13 @@ export const getToken = () => {
 export const deleteToken = () => {
   Cookie.remove("auth");
 };
+
+export const addAuthEmail = (x) => {
+  Cookie.set("auth_E", x);
+};
+export const getAuthEmail = () => {
+  return Cookie.get("auth_E");
+};
+export const deleteAuthEmail = () => {
+  Cookie.remove("auth_E");
+};

@@ -20,13 +20,13 @@ const TimeEnteries = () => {
   return (
     <>
       <h3>Summary of enteries</h3>
-      {summary !== null ? (
-        <div>
-          {isFetchingTimeEnteries ? (
-            <p className="placeholder-glow">
-              <span className="placeholder col-8"></span>
-            </p>
-          ) : (
+      {isFetchingTimeEnteries ? (
+        <p className="placeholder-glow ">
+          <span className="placeholder col-8 rounded"></span>
+        </p>
+      ) : (
+        <>
+          {summary && summary.sum_time ? (
             <p>
               You are currently
               <span
@@ -38,9 +38,9 @@ const TimeEnteries = () => {
               </span>{" "}
               the schedule for this month
             </p>
-          )}{" "}
-        </div>
-      ) : null}
+          ) : null}
+        </>
+      )}
       <div className="d-flex justify-content-end ">
         <Link to="/record-screen">Go Back</Link>
       </div>

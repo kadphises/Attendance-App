@@ -90,13 +90,13 @@ const RecordScreen = () => {
         <TodayEntry t_Entry={todayEntry} />
       </div>
       <div>
-        {summary !== null && summary?.sum_time ? (
-          <div>
-            {isFetchingTimeEnteries ? (
-              <p className="placeholder-glow">
-                <span className="placeholder col-8"></span>
-              </p>
-            ) : (
+        {isFetchingTimeEnteries ? (
+          <p className="placeholder-glow ">
+            <span className="placeholder col-8 rounded"></span>
+          </p>
+        ) : (
+          <>
+            {summary && summary.sum_time ? (
               <p>
                 You are currently
                 <span
@@ -108,9 +108,9 @@ const RecordScreen = () => {
                 </span>{" "}
                 the schedule for this month
               </p>
-            )}{" "}
-          </div>
-        ) : null}
+            ) : null}
+          </>
+        )}
       </div>
 
       <div className="mt-4">

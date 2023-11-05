@@ -7,7 +7,7 @@ import { Button, FormFeedback, Input, Spinner } from "reactstrap";
 import { useState } from "react";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { addToken } from "../helper";
+import { addAuthEmail, addToken } from "../helper";
 import { useContext } from "react";
 import AttendanceContext from "./../Provider";
 
@@ -29,13 +29,14 @@ const Signup = () => {
         return;
       }
 
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email.trim(), password);
+      addToken();
+      addAuthEmail(email.trim());
       /**
       TODO admin mode */
       if (email === "abhi@pal.com")
         navigate("/admin", { state: { auth: true } });
       else navigate("/record-screen", { state: { auth: true } });
-      addToken();
     } catch (e) {
       toast.error("Email already registred.", { toastId: "already" });
     } finally {

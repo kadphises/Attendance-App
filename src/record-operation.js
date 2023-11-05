@@ -1,5 +1,6 @@
 import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { db, auth } from "./firebase";
+import { db } from "./firebase";
+import { getAuthEmail } from "./helper";
 // import { testdata1 } from "./test-data";
 
 const month = [
@@ -19,7 +20,7 @@ const month = [
 const date = new Date();
 export const fetchUserDate = async () => {
   try {
-    const docRef = doc(db, "usersList", auth.currentUser.email);
+    const docRef = doc(db, "usersList", getAuthEmail());
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       return docSnap.data()?.list;
@@ -33,7 +34,7 @@ export const addCheckInTime = async () => {
   /**
    * Check if doc exists or not if not exists create one and entry otherwise update it
    */
-  const docRef = doc(db, "usersList", auth.currentUser.email);
+  const docRef = doc(db, "usersList", getAuthEmail());
   const docSnap = await getDoc(docRef);
   const entryData = {
     month: month[date.getMonth()],
@@ -64,7 +65,7 @@ export const addCheckInTime = async () => {
     console.log("No such document Creating One");
     const usersListRef = collection(db, "usersList");
 
-    await setDoc(doc(usersListRef, auth.currentUser.email), {
+    await setDoc(doc(usersListRef, getAuthEmail()), {
       list: [entryData],
     });
     console.log("document created and entry added");
@@ -75,7 +76,7 @@ export const addCheckOutTime = async (list) => {
   /**
    * Check if doc exists or not if not exists create one and entry otherwise update it
    */
-  const docRef = doc(db, "usersList", auth.currentUser.email);
+  const docRef = doc(db, "usersList", getAuthEmail());
 
   if (list?.length) {
     /**Update the data or add entry */
