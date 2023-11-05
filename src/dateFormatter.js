@@ -2,20 +2,23 @@ export const formatDateAs11thMonth = (t) => {
   const currentDate = new Date(t);
   const day = currentDate.getDate();
   const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
     "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
+
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const month = monthNames[currentDate.getMonth()];
+  const dayName = daysOfWeek[currentDate.getDay()];
 
   // Function to add the ordinal suffix to the day (e.g., 1st, 2nd, 3rd)
   const getOrdinalSuffix = (number) => {
@@ -35,7 +38,9 @@ export const formatDateAs11thMonth = (t) => {
     }
   };
 
-  const formattedDate = `${getOrdinalSuffix(day)} ${month}`;
+  const formattedDate = `${dayName}, ${month} ${getOrdinalSuffix(
+    day
+  )} ${currentDate.getFullYear()}`;
   return formattedDate;
 };
 

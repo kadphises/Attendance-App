@@ -31,7 +31,7 @@ const TimeEnteries = () => {
               You are currently
               <span
                 className="fw-bold"
-                style={{ color: summary?.status ? "green" : "red" }}>
+                style={{ color: summary?.status ? "#FF6D60" : "#539165" }}>
                 {summary?.status
                   ? ` ${calculateTimeElapsed(summary?.sum_time)} ahead `
                   : ` ${calculateTimeElapsed(summary?.sum_time)} behind `}
@@ -42,7 +42,12 @@ const TimeEnteries = () => {
         </>
       )}
       <div className="d-flex justify-content-end ">
-        <Link to="/record-screen">Go Back</Link>
+        <Link
+          to="/record-screen"
+          style={{ color: "#4FC0D0" }}
+          className="text-decoration-none fw-bold">
+          Go Back
+        </Link>
       </div>
       <div className="mt-2">
         <Table bordered hover size="sm">
@@ -71,12 +76,13 @@ const TimeEnteries = () => {
               const s = bothExist
                 ? {
                     backgroundColor:
-                      nineHoursInMillisecondsDiff >= 0 ? "red" : "green",
+                      nineHoursInMillisecondsDiff >= 0 ? "#FF6D60" : "#539165",
+                    color: "#fff",
                   }
                 : {};
               return (
                 <tr key={index}>
-                  <td>{index + 1}</td>
+                  <td className="fw-bold">{index + 1}</td>
                   <td>{formatDateAs11thMonth(checkInTime)}</td>
                   <td>{formatTimeFromTimestamp(checkInTime)}</td>
                   <td>

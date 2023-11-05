@@ -16,7 +16,7 @@ const TodayEntry = ({ t_Entry }) => {
 
   return (
     <div
-      style={{ border: "4px solid #007bff", borderRadius: "4px" }}
+      style={{ border: "4px solid #4FC0D0", borderRadius: "4px" }}
       className="p-1 m-2 ">
       {t_Entry.checkInTime ? (
         <div className="d-block ">
@@ -101,7 +101,7 @@ const RecordScreen = () => {
                 You are currently
                 <span
                   className="fw-bold"
-                  style={{ color: summary?.status ? "green" : "red" }}>
+                  style={{ color: summary?.status ? "#FF6D60" : "#539165" }}>
                   {summary?.status
                     ? ` ${calculateTimeElapsed(summary?.sum_time)} ahead `
                     : ` ${calculateTimeElapsed(summary?.sum_time)} behind `}
@@ -137,14 +137,19 @@ const RecordScreen = () => {
           </div>
         </div>
         {!cInEnabled && !cOutEnabled ? (
-          <div className="text-success fw-bold">
+          <div className=" fw-bold" style={{ color: "#555843" }}>
             Check-in and Check-out has been marked for today.
           </div>
         ) : null}
 
         <div>
           <div className="d-flex justify-content-end mt-4">
-            <Link to="/time-enteries">View last 45 days data</Link>
+            <Link
+              to="/time-enteries"
+              style={{ color: "#4FC0D0" }}
+              className="text-decoration-none fw-bold">
+              View last 45 days data
+            </Link>
           </div>
         </div>
       </div>
