@@ -7,8 +7,8 @@ export const initialState = {
   isFetchingTimeEnteries: false,
   timeEnteries: null,
   summary: null,
-  cInEnabled: false,
-  cOutEnabled: false,
+  cInEnabled: true,
+  cOutEnabled: true,
   todayEntry: null,
 };
 export const getStatusCounter = (list) => {
@@ -17,18 +17,21 @@ export const getStatusCounter = (list) => {
     let total = 0;
     list.forEach((element) => {
       if (element.checkInTime && element.checkOutTime) {
-        const cIn = element.checkInTime;
-        const cOut = element.checkOutTime;
-        total = total + cOut - cIn - 9 * 60 * 60 * 1000;
+        const month = new Date().getMonth();
+        const lastEntryMonth = new Date(element.checkInTime).getMonth();
+        if (month === lastEntryMonth) {
+          const cIn = element.checkInTime;
+          const cOut = element.checkOutTime;
+          total = total + cOut - cIn - 9 * 60 * 60 * 1000;
+        }
       }
     });
-    console.log("fff", total);
     return { sum_time: Math.abs(total), status: total >= 0 ? true : false };
   }
 };
 export const checkBtnState = (list) => {
   if (!list) return { cIn: false, cOut: false };
-  if (list.length === 0) return { cIn: true, cOut: false };
+  if (list.length === 0) return { cIn: true, cOut: true };
   else {
     const date = new Date().getDate();
     const month = new Date().getMonth();

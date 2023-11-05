@@ -17,7 +17,7 @@ const TodayEntry = ({ t_Entry }) => {
   return (
     <div
       style={{ border: "4px solid #007bff", borderRadius: "4px" }}
-      className="p-1">
+      className="p-1 m-2 ">
       {t_Entry.checkInTime ? (
         <div className="d-block ">
           <span>{"Today's"} check-in time:</span>{" "}
@@ -90,7 +90,7 @@ const RecordScreen = () => {
         <TodayEntry t_Entry={todayEntry} />
       </div>
       <div>
-        {summary !== null ? (
+        {summary !== null && summary?.sum_time ? (
           <div>
             {isFetchingTimeEnteries ? (
               <p className="placeholder-glow">
@@ -116,7 +116,7 @@ const RecordScreen = () => {
       <div className="mt-4">
         <div className="d-flex">
           <div>
-            {cInEnabled ? (
+            {cInEnabled && cOutEnabled ? (
               <Button
                 color="primary"
                 className="me-2"
@@ -125,7 +125,7 @@ const RecordScreen = () => {
                 Record Check-in TIme
               </Button>
             ) : null}
-            {cOutEnabled ? (
+            {cOutEnabled && !cInEnabled ? (
               <Button
                 color="primary"
                 className="mx-2"
@@ -143,7 +143,7 @@ const RecordScreen = () => {
         ) : null}
 
         <div>
-          <div className="d-flex justify-content-end">
+          <div className="d-flex justify-content-end mt-4">
             <Link to="/time-enteries">View last 45 days data</Link>
           </div>
         </div>

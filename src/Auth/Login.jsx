@@ -19,7 +19,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const login = async () => {
-    console.log(auth.currentUser.email);
+    // console.log(auth.currentUser.email);
     try {
       setLoading(true);
       if (!state?.allowedUsersList?.includes(email.trim())) {
